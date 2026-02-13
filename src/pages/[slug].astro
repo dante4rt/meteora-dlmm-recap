@@ -1,0 +1,43 @@
+---
+import { getCollection, render } from 'astro:content';
+import DocsLayout from '../layouts/DocsLayout.astro';
+
+export async function getStaticPaths() {
+  const notes = await getCollection('notes');
+  return notes.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+---
+
+<DocsLayout title={entry.data.title} headings={headings}>
+  <a href="/" class="back-link">&larr; All Days</a>
+  <h1>{entry.data.title}</h1>
+  <Content />
+</DocsLayout>
+
+<style>
+  .back-link {
+    display: inline-block;
+    margin-bottom: 16px;
+    font-size: 14px;
+    color: var(--spectrum-gray-600);
+    text-decoration: none;
+  }
+
+  .back-link:hover {
+    color: var(--spectrum-accent-color-900, var(--spectrum-blue-800));
+  }
+
+  :global(.spectrum--darkest) .back-link {
+    color: var(--spectrum-gray-400);
+  }
+
+  :global(.spectrum--darkest) .back-link:hover {
+    color: var(--spectrum-accent-color-500, #5dadec);
+  }
+</style>
