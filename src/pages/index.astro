@@ -28,17 +28,39 @@ const sorted = notes.sort((a, b) => (a.data.day ?? 0) - (b.data.day ?? 0));
 <style>
   .day-grid {
     display: grid;
-    gap: 16px;
-    margin-top: 24px;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  /* Tablet: Increase gap */
+  @media (min-width: 480px) {
+    .day-grid {
+      gap: 16px;
+      margin-top: 24px;
+    }
   }
 
   .day-card {
     display: block;
-    padding: 20px 24px;
+    padding: 14px 16px;
     border: 1px solid var(--spectrum-gray-200);
     border-radius: 8px;
     text-decoration: none;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  /* Tablet: Better padding */
+  @media (min-width: 480px) {
+    .day-card {
+      padding: 18px 20px;
+    }
+  }
+
+  /* Desktop: Full padding */
+  @media (min-width: 768px) {
+    .day-card {
+      padding: 20px 24px;
+    }
   }
 
   .day-card:hover {
@@ -48,19 +70,19 @@ const sorted = notes.sort((a, b) => (a.data.day ?? 0) - (b.data.day ?? 0));
 
   .day-card h2 {
     margin: 0 0 8px;
-    font-size: 20px;
+    font-size: clamp(17px, 3.5vw, 20px);
     border: none;
     padding: 0;
   }
 
   .day-card p {
     margin: 0 0 8px;
-    font-size: 14px;
+    font-size: var(--docs-font-size-sm);
     color: var(--spectrum-gray-700);
   }
 
   .day-card time {
-    font-size: 13px;
+    font-size: var(--docs-font-size-xs);
     color: var(--spectrum-gray-500);
   }
 

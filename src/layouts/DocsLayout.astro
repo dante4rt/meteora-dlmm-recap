@@ -25,9 +25,14 @@ const navHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
     </button>
 
     <div class="docs-wrapper">
-      <aside class="docs-sidebar">
-        <div class="docs-sidebar-title">On This Page</div>
-        <nav>
+      <aside class="docs-sidebar" id="docs-sidebar">
+        <button class="docs-sidebar-toggle" id="sidebar-toggle" aria-label="Toggle navigation" aria-expanded="false">
+          <span class="docs-sidebar-title">On This Page</span>
+          <svg class="toggle-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <nav class="docs-sidebar-nav">
           {navHeadings.map((h) => (
             <a href={`#${h.slug}`} class={h.depth === 3 ? 'depth-3' : ''}>
               {h.text}
@@ -110,6 +115,28 @@ const navHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
           document.addEventListener('DOMContentLoaded', initMermaid);
         } else {
           initMermaid();
+        }
+
+        // Sidebar toggle for mobile
+        var sidebarToggle = document.getElementById('sidebar-toggle');
+        var sidebar = document.getElementById('docs-sidebar');
+        
+        if (sidebarToggle && sidebar) {
+          sidebarToggle.addEventListener('click', function () {
+            var isExpanded = sidebar.classList.toggle('expanded');
+            sidebarToggle.setAttribute('aria-expanded', isExpanded);
+          });
+
+          // Auto-collapse on mobile when clicking a nav link
+          var navLinks = sidebar.querySelectorAll('.docs-sidebar-nav a');
+          navLinks.forEach(function(link) {
+            link.addEventListener('click', function() {
+              if (window.innerWidth < 768) {
+                sidebar.classList.remove('expanded');
+                sidebarToggle.setAttribute('aria-expanded', 'false');
+              }
+            });
+          });
         }
       })();
     </script>

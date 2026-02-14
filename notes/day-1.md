@@ -1,201 +1,242 @@
 ---
-title: "Day 1 — DLMM Fundamentals & Strategies"
-description: "Core DLMM concepts, bid-ask strategies, security tools, and token discovery"
-date: "2025-02-14"
-day: 1
+title: "Day 0 — Introduction & DLMM Basics"
+description: "Core DeFi concepts, DLMM mechanics, bins, strategies, and platform walkthrough"
+date: "2025-02-13"
+day: 0
 ---
 
-## Strategies Overview
+## Introduction & Core DeFi Concepts
 
-### Mentor's Strategy
+### Bootcamp Overview
 
-- **Wide range** distribution with 50% token / 50% SOL in a **bid-ask** layout, then **spot**
+Session led by instructors Pesal and Megumi, emphasizing that all material is for educational purposes and not financial advice.
 
-### Evil Panda's Strategy
+### Key Terminology
 
-- Go **one-sided SOL** (quote token only) at **-85% to -90%** range
-- Use **wide range** distribution
-- Typically in **100 bin step** pools with **5%–10% fee**
-- Target pools with **high volume** — filter 1-hour volume > 100K, or for quick plays filter 5-minute volume > 100K
-- _Prefer [DEX Screener](https://dexscreener.com) over GMGN for safer analysis_
-- Refer to **Advanced Bootcamp #7** for detailed parameters
+- **TVL (Total Value Locked)** — Total capital deposited in a protocol or pool
+- **Volume** — Trading activity and liquidity flow through a pool
+- **Slippage** — Price difference between when a transaction is initiated and when it's executed
 
-## Security & Tools
+### DLMM vs. Standard AMM
 
-### Learning & Analytics
-
-- [LP Army](https://lparmy.com) — Bootcamp platform for learning DLMM strategies
-- [Metlex](https://metlex.io) — Discover trending tokens, fees, and PnL data
-- [Meteora Profit Analysis](https://geeklad.github.io/meteora-profit-analysis/) — Wallet-level profit analysis
-- [UltraLP](https://www.ultralp.com/) — PnL analysis tool
-- [HawkFi](https://www.hawkfi.ag/) — LP management assistant
-- [MetEngine](https://www.metengine.xyz/) — LP analytics tool
-- [Fabriq](https://fabriq.trade/trending) — Meteora score tracker; _look for scores above 200_ (high trading volume + activity = high score)
-
-### Security Checks
-
-- **[Rugcheck](https://rugcheck.xyz)** — Scan tokens for rug pull indicators
-- **[Bubblemaps Solana](https://bubblemaps.io)** — Visualize holder relationships
-  - _Watch out for large clusters holding high percentages — signals suspicious concentration_
-
-### Red Flags
-
-- **Wash trading** — If chart activity suddenly stops, it's likely bot-driven volume that halted due to errors
-- **Low total fees** — Avoid pools with total fees below **25 SOL** (check on GMGN); low fees often indicate a **bundler** using single-transaction orders
-
-### Token Vetting Flow
-
-```mermaid
-flowchart TD
-    A[Find Token] --> B{Rugcheck.xyz}
-    B -->|Safe| C{Bubblemaps}
-    B -->|Flagged| X1[AVOID]
-    C -->|No suspicious clusters| D{Check Total Fees}
-    C -->|Large cluster = SUS| X2[AVOID]
-    D -->|>= 25 SOL| E{Chart Activity}
-    D -->|< 25 SOL = Bundler| X3[AVOID]
-    E -->|Steady volume| F[SAFE TO LP]
-    E -->|Sudden stops = Wash Trading| X4[AVOID]
-
-    style F fill:#2d7d46,color:#fff
-    style X1 fill:#c9252d,color:#fff
-    style X2 fill:#c9252d,color:#fff
-    style X3 fill:#c9252d,color:#fff
-    style X4 fill:#c9252d,color:#fff
-```
-
-## Token Discovery
-
-### Discord Channels (MeteoraIDN)
-
-#### LP-Signals
-
-- Multiday opportunities, exotic pairs, and more
-
-#### LP-Alpha
-
-- **Degen Calls** — Curated picks from experienced LPs
-- **Multiday Degens** — Tokens with potential for multi-day positions
-- **Degen DLMM** — High-risk, high-reward opportunities
-
-### Discovery Flow
+Unlike Standard AMMs, the DLMM (Dynamic Liquidity Market Maker) allows for **concentrated liquidity**, making capital usage more efficient for LPs.
 
 ```mermaid
 flowchart LR
-    A["Discord<br>MeteoraIDN"] --> B["LP-Signals<br>LP-Alpha"]
-    B --> C["Pool Discovery<br>Meteora.ag"]
-    C --> D[Apply Filters]
-    D --> E["Technical Analysis<br>GMGN"]
-    E --> F{"Entry<br>Decision"}
-    F -->|Bullish signals| G[Open Position]
-    F -->|Weak signals| H[Wait / Skip]
-
-    style G fill:#2d7d46,color:#fff
-    style H fill:#e68619,color:#fff
-```
-
-### Pool Discovery (on Meteora.ag)
-
-Recommended filters:
-
-- **Jupiter Score** >= 70
-- **Market Cap** >= 250K
-- **Holders** >= 500
-- **Pool type** — DLMM only
-- **Volume** >= 1K (or 24H volume >= 1M)
-
-### Technical Analysis (use GMGN)
-
-1. **MACD** — Blue crosses above orange = bullish; orange crosses above blue = bearish
-2. **RSI** — Standard overbought/oversold signals
-3. **Heikin Ashi candles** — Smoothed candlesticks for clearer trend visualization
-4. **Volume Profile Visible Range (VPVR)** — Chart overlay showing volume distribution at each price level
-
-## DLMM Strategies
-
-### Strategy Selection Guide
-
-```mermaid
-flowchart TD
-    A{"What kind<br>of token?"} -->|Stable / Ranging| B["Chill / Range<br>Set range, earn fees<br>automatically"]
-    A -->|New / Volatile| C{"Token<br>topped out?"}
-    C -->|Yes| D["One-Sided Flip<br>SOL → Token → SOL"]
-    C -->|No / Unsure| E["Bid-Ask<br>50/50 wide range"]
-
-    style B fill:#2d7d46,color:#fff
-    style D fill:#e68619,color:#fff
-    style E fill:#1473e6,color:#fff
-```
-
-### Bid-Ask Explained
-
-A **bid-ask** strategy means buying or selling incrementally across a price range, rather than all at once.
-
-### One-Sided Flip Strategy
-
-```mermaid
-flowchart TD
-    A["Token topped out<br>(price at peak)"] --> B["Deposit SOL only<br>(one-sided bid)"]
-    B --> C["Price drops<br>SOL → Token conversion"]
-    C --> D["Withdraw liquidity<br>You now hold tokens"]
-    D --> E["Re-enter with TOKENS<br>(one-sided ask)"]
-    E --> F["Price bounces<br>Tokens → SOL conversion"]
-    F --> G["Withdraw<br>SOL + profit"]
-
-    A -.- note1["THE FLIP:<br>1st: SOL-side<br>2nd: Token-side"]
-
+    A["Standard AMM"] --> B["Liquidity spread<br>across entire curve"]
+    A --> C["Less capital<br>efficient"]
+    A --> D["Simple to use"]
+    
+    E["DLMM"] --> F["Concentrated<br>liquidity in bins"]
+    E --> G["Higher capital<br>efficiency"]
+    E --> H["Strategic<br>positioning"]
+    
     style A fill:#e68619,color:#fff
-    style G fill:#2d7d46,color:#fff
-    style note1 fill:none,stroke:#888,stroke-dasharray:5 5
+    style E fill:#2d7d46,color:#fff
 ```
 
-1. Deposit **SOL only** (one-sided) — you _expect the price to drop_
-2. As the price drops, your SOL gradually buys the token at decreasing prices — think of it as "I want to buy this token, but in small increments"
-3. Best used when a token appears to have **topped out**
-4. Once the price has dropped and your SOL has converted to tokens, **withdraw liquidity**
-5. Re-enter with the **acquired tokens** (one-sided token deposit), now expecting a bounce
-6. This is the **flip** — first SOL-side, then token-side
+## DLMM Mechanics: Bins & Bin Steps
 
-### Chill / Range Strategy
+### Understanding Bins
 
-- Best for **stable or ranging tokens** where you can identify a reliable price range
-- Set your range and let the position earn fees as price oscillates within it
-- No manual flipping needed — the position automatically earns as price moves within range
+Liquidity in DLMM is stored in **Bins**, which are specific price containers. Users can hold liquidity in these bins whether the current price is active there or not.
 
-## Tips & Rules
+**Key characteristics:**
 
-### Earnings Expectations
+- Each bin represents a discrete price point
+- Liquidity can exist in bins above or below the current market price
+- Active bins earn fees when trades execute at their price level
 
-- **20–30% daily return on 1 SOL** is achievable, but _only with a conservative, safe approach_
+```mermaid
+flowchart TD
+    A["Price Range"] --> B["Bin 1<br>$95"]
+    A --> C["Bin 2<br>$100"]
+    A --> D["Bin 3<br>$105"]
+    A --> E["Bin 4<br>$110"]
+    
+    C -.-> F["Active Bin<br>⚡ Earning Fees"]
+    B -.-> G["Below Price<br>Holds Token"]
+    D -.-> H["Above Price<br>Holds SOL"]
+    E -.-> H
+    
+    style C fill:#2d7d46,color:#fff
+    style B fill:#1473e6,color:#fff
+    style D fill:#e68619,color:#fff
+    style E fill:#e68619,color:#fff
+```
 
-### Risk Management
+### Bin Steps Explained
 
-- **Evil Panda's rule of thumb**: Prioritize **total fees** and **volume** above all other metrics
-- Total fees generated is a reliable proxy for overall pool quality — it covers most of your analysis
-- _Research first, ape later_
+The **Bin Step** is the percentage difference in price between two consecutive bins, defining the granularity of the price range.
 
-### Position Sizing
+### Impact of Bin Size
 
-- Better to go **single-side SOL** — when you sense the top, deploy immediately
-- Combine with **MACD + VPVR** and other indicators for timing
-- Define your lifestyle: a **1 SOL bid-ask** position is a solid starting point
+- **Smaller Bin Step** — Higher precision and smoother price changes
+- **Larger Bin Step** — Wider price range coverage but with coarser price movements
 
-### Fee Guidelines
+## Liquidity Distribution Types
 
-- **Old tokens** (3+ days): Wide range up to 90%, fee at **2%** is safe
-- **New tokens**: Use **5–10% fee** pools
+When providing liquidity, you choose how to spread it across the price range. There are three basic distribution shapes:
 
-### Timeframe Reference
+### 1. Spot Distribution
 
-- **Yunus's timeframe**: 15-minute candles / 30-second intervals
-- **Multiday** = hold for days; **Multihour** = hold for hours
+- **Uniform spread** across your selected price range
+- Most versatile, general-purpose option
+- Good starting point for beginners
 
-### Cut-Loss Rules
+### 2. Curve Distribution
 
-- Wrong token pick, oversized bundle, bad chart read — **cut immediately**
-- Exit signal triggered but price dumps — _stay consistent, don't hesitate_
+- **Concentrated** liquidity tightly around current price
+- Best for stable pairs with minimal price movement (e.g., USDC/USDT)
+- Higher capital efficiency in ranging markets
 
-### Timing Rules
+### 3. Bid-Ask Distribution
 
-- _Do not open positions in the afternoon (2–3 PM)_ — you'd have to close them in the morning
-- **Open at 10–11 PM** when the chart is still near **ATH**
+- **Asymmetric** distribution for directional strategies
+- Allows gradual buying (bid) or selling (ask) as price moves
+- Used for Dollar Cost Averaging (DCA) approaches
+
+```mermaid
+flowchart LR
+    A["Spot"] --> A1["Even spread"]
+    B["Curve"] --> B1["Tight focus"]
+    C["Bid-Ask"] --> C1["Directional"]
+    
+    style A fill:#1473e6,color:#fff
+    style B fill:#2d7d46,color:#fff
+    style C fill:#e68619,color:#fff
+```
+
+> **Note:** Day 1 covers advanced strategies that use these distributions in combination with market analysis.
+
+### Impermanent Loss (IL)
+
+The goal is to generate enough trading fees from volume to outweigh the temporary loss in asset value caused by price divergence.
+
+**Key concept:** IL is not realized until you withdraw liquidity. The position value changes as prices move, but fees accumulate to offset this.
+
+### Profitability Focus
+
+To be a profitable LP:
+
+- **Fees earned must exceed the "difference loss"** (impermanent loss)
+- High volatility can be beneficial **if fees cover the price shifts**
+- Focus on volume-generating pools to maximize fee income
+
+```mermaid
+flowchart LR
+    A["LP Position"] --> B["Price Volatility<br>↕"]
+    B --> C["Impermanent Loss<br>⚠"]
+    
+    A --> D["Trading Volume<br>📈"]
+    D --> E["Fee Income<br>💰"]
+    
+    C --> F{"Fees > IL?"}
+    E --> F
+    
+    F -->|Yes| G["✅ Profitable<br>Position"]
+    F -->|No| H["⚠ Losing<br>Position"]
+    
+    style G fill:#2d7d46,color:#fff
+    style H fill:#c9252d,color:#fff
+    style E fill:#2d7d46,color:#fff
+    style C fill:#e68619,color:#fff
+```
+
+## Platform Tour & Practical Walkthrough
+
+### Meteora Interface Overview
+
+The Meteora app provides several key features for liquidity provision:
+
+#### Quick Entry: Lightning Button
+
+- Instantly zap into top trending pools
+- One-click access to high-volume opportunities
+- Streamlined onboarding for popular pairs
+
+### Opening a Position
+
+**Step-by-step process:**
+
+```mermaid
+flowchart TD
+    A["Start"] --> B["Connect Wallet<br>Phantom, Solflare, etc."]
+    B --> C["Select Trading Pair<br>e.g., SOL/USDC"]
+    C --> D["Choose Bin Step<br>Price granularity"]
+    D --> E["Set Deposit Amount<br>Token quantity"]
+    E --> F["Select Distribution<br>Spot/Curve/Bid-Ask"]
+    F --> G["Single or Dual Side?"]
+    
+    G -->|Single-sided| H["Deposit SOL only<br>or Token only"]
+    G -->|Dual-sided| I["Deposit both<br>SOL + Token"]
+    
+    H --> J["Review & Confirm"]
+    I --> J
+    J --> K["Position Active<br>⚡ Earning Fees"]
+    
+    style A fill:#888,color:#fff
+    style K fill:#2d7d46,color:#fff
+```
+
+1. **Connect wallet** — Link your Solana wallet (Phantom, Solflare, etc.)
+2. **Select pair** — Choose trading pair (e.g., SOL/USDC)
+3. **Choose parameters:**
+   - Bin Step (price granularity)
+   - Deposit amount
+   - Liquidity distribution shape
+4. **Confirm transaction** — Review and approve
+
+### Single-Sided Liquidity
+
+A key feature that allows providing liquidity with only one token:
+
+**Benefits:**
+
+- **Deposit only SOL** (or only the token) instead of requiring both
+- Customize exposure based on market views
+- Useful for directional strategies
+
+**Example:** If you're bullish on a token but it's currently at a low price, deposit SOL only. As price rises, your SOL gradually converts to the token.
+
+## Token Safety Basics
+
+Before providing liquidity to any pool, **always research the token first**. This is critical to avoid scams and rug pulls.
+
+### Essential Safety Checks
+
+1. **Verify the contract address** — Always check official sources (website, Twitter, CoinGecko)
+2. **Scan for security issues** — Use tools like [Rugcheck.xyz](https://rugcheck.xyz)
+3. **Check holder distribution** — Use [Bubblemaps](https://bubblemaps.io) to spot suspicious concentration
+4. **Look for organic volume** — Avoid sudden spikes that disappear
+
+### Quick Red Flags
+
+- ❌ Unverified or suspicious contracts
+- ❌ Most tokens held by a few wallets
+- ❌ Unrealistic APY promises (if it's too good to be true...)
+- ❌ Volume that suddenly stops (likely wash trading)
+
+### Golden Rules for Beginners
+
+1. **Start small** — Test with amounts you're comfortable losing
+2. **Avoid FOMO** — Don't chase pumps without analysis
+3. **Stick to established tokens first** — SOL/USDC and major pairs are safer for learning
+4. **Monitor your positions** — Check daily, especially when learning
+
+> **Note:** Day 1 provides detailed security workflows, token vetting processes, and advanced risk management strategies.
+
+### Resources & Community
+
+#### Join the Community
+
+- **Meteora Discord** — Official platform updates and support
+- **LP Army Discord** — Bootcamp community and ongoing coaching
+- **Certification** — Complete bootcamp form to earn roles and access advanced content
+
+#### Next Steps
+
+1. Complete daily bootcamp sessions
+2. Practice with small positions first
+3. Join Discord channels for ongoing support
+4. Apply strategies incrementally as you learn
