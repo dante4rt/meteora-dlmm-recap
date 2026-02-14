@@ -1,5 +1,5 @@
 ---
-title: "Day 0 — Introduction & DLMM Basics"
+title: "Day 1 — Introduction & DLMM Basics"
 description: "Core DeFi concepts, DLMM mechanics, bins, strategies, and platform walkthrough"
 date: "2025-02-13"
 day: 0

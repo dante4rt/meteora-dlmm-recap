@@ -5,7 +5,7 @@ date: "2025-02-14"
 day: 1
 ---
 
-> **Prerequisites:** This guide assumes you've completed Day 0 and understand DLMM basics (bins, distributions, impermanent loss).
+> **Prerequisites:** This guide assumes you've completed Day 1 and understand DLMM basics (bins, distributions, impermanent loss).
 
 ## Advanced Strategies Overview
 
@@ -24,7 +24,7 @@ day: 1
 
 ## Security & Risk Management (Advanced)
 
-Building on Day 0's basic safety checks, here's the professional workflow for vetting tokens and pools.
+Building on Day 1's basic safety checks, here's the professional workflow for vetting tokens and pools.
 
 ### Professional Token Vetting Workflow
 
@@ -66,7 +66,7 @@ flowchart TD
 
 ### Advanced Red Flags
 
-Beyond Day 0 basics, watch for:
+Beyond Day 1 basics, watch for:
 
 1. **Wash Trading Detection**
    - Chart shows high volume, then activity suddenly stops
@@ -166,7 +166,7 @@ flowchart TD
 
 ### Bid-Ask Strategy (Advanced)
 
-As introduced in Day 0, **bid-ask** distribution allows asymmetric liquidity placement. In practice, this means buying or selling incrementally across a price range rather than all at once.
+As introduced in Day 1, **bid-ask** distribution allows asymmetric liquidity placement. In practice, this means buying or selling incrementally across a price range rather than all at once.
 
 **Key concept:** You're not making one trade—you're setting up multiple automatic trades across different price points.
 
@@ -198,7 +198,7 @@ flowchart TD
 ### Chill / Range Strategy
 
 - Best for **stable or ranging tokens** where you can identify a reliable price range
-- Uses **curve** or **spot** distribution (from Day 0) to capture fee revenue
+- Uses **curve** or **spot** distribution (from Day 1) to capture fee revenue
 - Set your range and let the position earn fees as price oscillates within it
 - No manual flipping needed — the position automatically earns as price moves within range
 - Lower risk, steadier returns compared to directional plays
@@ -211,7 +211,7 @@ flowchart TD
 
 ### Professional Risk Management Rules
 
-Building on Day 0's golden rules, here are advanced principles from experienced LPs:
+Building on Day 1's golden rules, here are advanced principles from experienced LPs:
 
 **Evil Panda's Rule:**
 
@@ -234,7 +234,7 @@ Building on Day 0's golden rules, here are advanced principles from experienced 
 
 ### Fee Selection Strategy (Advanced)
 
-Building on Day 0's basic fee guidelines, here's the professional approach:
+Building on Day 1's basic fee guidelines, here's the professional approach:
 
 **Established Tokens (3+ days old):**
 
