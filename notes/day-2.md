@@ -1,8 +1,8 @@
 ---
-title: "Day 1 — Advanced Strategies & Operations"
+title: "Day 2 — Advanced Strategies & Operations"
 description: "Advanced DLMM strategies, security workflows, token discovery, and professional tips"
 date: "2025-02-14"
-day: 1
+day: 2
 ---
 
 > **Prerequisites:** This guide assumes you've completed Day 1 and understand DLMM basics (bins, distributions, impermanent loss).
