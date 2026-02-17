@@ -1,0 +1,26 @@
+{
+  "site": {
+    "title": "Meteora DLMM Recap",
+    "description": "Study notes from Meteora DLMM bootcamp sessions."
+  },
+  "nav": {
+    "toggleTheme": "Toggle dark mode",
+    "toggleSidebar": "Toggle navigation",
+    "onThisPage": "On This Page"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "language": {
+    "switchTo": "Switch to",
+    "en": "English",
+    "id": "Bahasa Indonesia"
+  },
+  "links": {
+    "backToHome": "All Days"
+  },
+  "sidebar": {
+    "title": "On This Page"
+  }
+}

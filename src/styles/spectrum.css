@@ -473,11 +473,29 @@ hr {
 }
 
 /* ─── Theme Toggle ────────────────────────────────────────── */
-.theme-toggle {
+/* Header Controls Container */
+.header-controls {
   position: fixed;
   bottom: var(--docs-spacing-md);
   right: var(--docs-spacing-md);
   z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: var(--docs-spacing-xs);
+  align-items: flex-end;
+}
+
+@media (min-width: 768px) {
+  .header-controls {
+    top: var(--docs-spacing-md);
+    bottom: auto;
+    flex-direction: row;
+    gap: var(--docs-spacing-sm);
+  }
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
   border: 1px solid var(--spectrum-gray-300);
   background: var(--spectrum-background-layer-2-color, #fff);
   color: var(--spectrum-gray-700);
@@ -492,12 +510,8 @@ hr {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Move to top-right on tablet and desktop */
 @media (min-width: 768px) {
   .theme-toggle {
-    top: var(--docs-spacing-md);
-    bottom: auto;
-    right: var(--docs-spacing-md);
     padding: 8px 12px;
     font-size: var(--docs-font-size-sm);
     border-radius: 8px;
@@ -517,6 +531,66 @@ hr {
 }
 
 .spectrum--darkest .theme-toggle:hover {
+  background: var(--spectrum-gray-700, #333);
+}
+
+/* Language Switcher */
+.language-switcher {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--spectrum-gray-300);
+  background: var(--spectrum-background-layer-2-color, #fff);
+  color: var(--spectrum-gray-700);
+  border-radius: 6px;
+  padding: 10px 14px;
+  min-height: 44px;
+  font-size: var(--docs-font-size-xs);
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+  font-family: inherit;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+@media (min-width: 768px) {
+  .language-switcher {
+    padding: 8px 12px;
+    font-size: var(--docs-font-size-sm);
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.language-switcher:hover {
+  background: var(--spectrum-gray-100);
+  border-color: var(--spectrum-gray-400);
+  transform: translateY(-1px);
+}
+
+.language-switcher:active {
+  transform: translateY(0);
+}
+
+.language-flag {
+  font-size: 1.2em;
+  line-height: 1;
+}
+
+.language-code {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* Dark mode styles */
+.spectrum--darkest .language-switcher {
+  border-color: var(--spectrum-gray-600, #555);
+  background: var(--spectrum-gray-800, #222);
+  color: var(--spectrum-gray-300, #ccc);
+}
+
+.spectrum--darkest .language-switcher:hover {
   background: var(--spectrum-gray-700, #333);
 }
 

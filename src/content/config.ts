@@ -8,6 +8,7 @@ const notes = defineCollection({
     description: z.string().optional(),
     date: z.coerce.date().optional(),
     day: z.number().optional(),
+    lang: z.enum(['en', 'id']).optional(),
   }),
 });
 

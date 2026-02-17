@@ -1,33 +1,50 @@
 ---
 import '../styles/spectrum.css';
+import { getTranslations, type Locale } from '../i18n/utils';
+import LanguageSwitcher from '../components/LanguageSwitcher.astro';
 
 interface Props {
   title: string;
+  locale: Locale;
   headings?: Array<{ depth: number; slug: string; text: string }>;
 }
 
-const { title, headings = [] } = Astro.props;
+const { title, locale, headings = [] } = Astro.props;
+const t = getTranslations(locale);
 const navHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
+const currentPath = Astro.url.pathname;
+const pathWithoutLocale = currentPath.replace(/^\/(en|id)/, '');
+const siteUrl = 'https://meteora-dlmm-recap.pages.dev';
 ---
 
 <!doctype html>
-<html lang="en" class="spectrum spectrum--medium spectrum--light">
+<html lang={locale} class="spectrum spectrum--medium spectrum--light">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title} | Meteora DLMM Recap</title>
+    <title>{title} | {t.site.title}</title>
+    <meta name="description" content={t.site.description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Language alternates for SEO -->
+    <link rel="alternate" hreflang="en" href={`${siteUrl}/en${pathWithoutLocale}`} />
+    <link rel="alternate" hreflang="id" href={`${siteUrl}/id${pathWithoutLocale}`} />
+    <link rel="alternate" hreflang="x-default" href={`${siteUrl}/en${pathWithoutLocale}`} />
   </head>
   <body class="spectrum-Body">
-    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
-      Light
-    </button>
+    <div class="header-controls">
+      <LanguageSwitcher locale={locale} currentPath={currentPath} />
+      <button class="theme-toggle" id="theme-toggle" aria-label={t.nav.toggleTheme}>
+        {t.theme.light}
+      </button>
+    </div>
 
     <div class="docs-wrapper">
+      {navHeadings.length > 0 && (
       <aside class="docs-sidebar" id="docs-sidebar">
-        <button class="docs-sidebar-toggle" id="sidebar-toggle" aria-label="Toggle navigation" aria-expanded="false">
-          <span class="docs-sidebar-title">On This Page</span>
+        <button class="docs-sidebar-toggle" id="sidebar-toggle" aria-label={t.nav.toggleSidebar} aria-expanded="false">
+          <span class="docs-sidebar-title">{t.sidebar.title}</span>
           <svg class="toggle-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
             <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -40,6 +57,7 @@ const navHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
           ))}
         </nav>
       </aside>
+      )}
 
       <main class="docs-content">
         <slot />
@@ -47,7 +65,7 @@ const navHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
     </div>
 
     <script is:inline src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
-    <script is:inline>
+    <script is:inline define:vars={{ lightText: t.theme.light, darkText: t.theme.dark }}>
       (function () {
         var root = document.documentElement;
         var btn = document.getElementById('theme-toggle');
@@ -56,7 +74,7 @@ const navHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
 
         if (isDark) {
           root.classList.replace('spectrum--light', 'spectrum--darkest');
-          btn.textContent = 'Dark';
+          btn.textContent = darkText;
         }
 
         function getMermaidTheme() {
@@ -101,11 +119,11 @@ const navHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
           var dark = root.classList.contains('spectrum--darkest');
           if (dark) {
             root.classList.replace('spectrum--darkest', 'spectrum--light');
-            btn.textContent = 'Light';
+            btn.textContent = lightText;
             localStorage.setItem('theme', 'light');
           } else {
             root.classList.replace('spectrum--light', 'spectrum--darkest');
-            btn.textContent = 'Dark';
+            btn.textContent = darkText;
             localStorage.setItem('theme', 'dark');
           }
           reRenderMermaid();

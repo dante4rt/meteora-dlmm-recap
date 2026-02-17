@@ -3,6 +3,7 @@ title: "Day 1 — Introduction & DLMM Basics"
 description: "Core DeFi concepts, DLMM mechanics, bins, strategies, and platform walkthrough"
 date: "2025-02-13"
 day: 0
+lang: "en"
 ---
 
 ## Introduction & Core DeFi Concepts

@@ -1,0 +1,51 @@
+---
+import { getTranslations, locales, type Locale } from '../i18n/utils';
+
+interface Props {
+  locale: Locale;
+  currentPath: string;
+}
+
+const { locale, currentPath } = Astro.props;
+const t = getTranslations(locale);
+
+// Determine the alternate locale
+const alternateLocale: Locale = locale === 'en' ? 'id' : 'en';
+
+// Generate alternate path by replacing locale prefix
+function getAlternatePath(path: string, fromLocale: Locale, toLocale: Locale): string {
+  // Remove leading/trailing slashes for easier processing
+  const cleanPath = path.replace(/^\/+|\/+$/g, '');
+  const segments = cleanPath.split('/').filter(Boolean);
+  
+  // If first segment is the current locale, replace it
+  if (segments[0] === fromLocale) {
+    segments[0] = toLocale;
+    return '/' + segments.join('/') + (path.endsWith('/') ? '/' : '');
+  }
+  
+  // If no locale prefix, add the target locale
+  return '/' + toLocale + (cleanPath ? '/' + cleanPath : '');
+}
+
+const alternatePath = getAlternatePath(currentPath, locale, alternateLocale);
+
+// Language display info
+const languageInfo = {
+  en: { code: 'EN', flag: '🇬🇧', label: t.language.en },
+  id: { code: 'ID', flag: '🇮🇩', label: t.language.id },
+};
+
+const targetLang = languageInfo[alternateLocale];
+const ariaLabel = `${t.language.switchTo} ${targetLang.label}`;
+---
+
+<a 
+  href={alternatePath} 
+  class="language-switcher" 
+  aria-label={ariaLabel}
+  title={ariaLabel}
+>
+  <span class="language-flag" aria-hidden="true">{targetLang.flag}</span>
+  <span class="language-code">{targetLang.code}</span>
+</a>

@@ -3,6 +3,7 @@ title: "Day 3 — Strategy Execution & Risk Discipline"
 description: "Hands-on DLMM execution, the Toothpaste method, IL vs Out of Range, cut-loss discipline, and bootcamp homework"
 date: "2025-02-15"
 day: 3
+lang: "en"
 ---
 
 > **Prerequisites:** This guide assumes you've completed Day 1 (DLMM basics) and Day 2 (advanced strategies and security workflows).

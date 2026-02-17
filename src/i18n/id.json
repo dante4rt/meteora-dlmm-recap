@@ -1,0 +1,26 @@
+{
+  "site": {
+    "title": "Rekap Meteora DLMM",
+    "description": "Catatan belajar dari sesi bootcamp Meteora DLMM."
+  },
+  "nav": {
+    "toggleTheme": "Ganti mode gelap",
+    "toggleSidebar": "Ganti navigasi",
+    "onThisPage": "Di Halaman Ini"
+  },
+  "theme": {
+    "light": "Terang",
+    "dark": "Gelap"
+  },
+  "language": {
+    "switchTo": "Ganti ke",
+    "en": "English",
+    "id": "Bahasa Indonesia"
+  },
+  "links": {
+    "backToHome": "Semua Hari"
+  },
+  "sidebar": {
+    "title": "Di Halaman Ini"
+  }
+}
