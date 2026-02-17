@@ -1,216 +1,140 @@
 ---
-import { defaultLocale } from '../i18n/utils';
+import { getCollection } from 'astro:content';
+import DocsLayout from '../layouts/DocsLayout.astro';
+import { getTranslations } from '../i18n/utils';
+
+const locale = 'en';
+const t = getTranslations(locale);
+
+const notes = await getCollection('notes');
+// Filter by English language
+const filtered = notes.filter((entry) => entry.data.lang === 'en');
+const sorted = filtered.sort((a, b) => (a.data.day ?? 0) - (b.data.day ?? 0));
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Meteora DLMM Recap</title>
-  <meta http-equiv="refresh" content="0;url=/{defaultLocale}/" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<DocsLayout title={t.site.title} locale={locale}>
+  <h1>{t.site.title}</h1>
+  <p>{t.site.description}</p>
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      overflow: hidden;
-    }
-
-    .container {
-      text-align: center;
-      padding: 2rem;
-      animation: fadeIn 0.6s ease-out;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .logo {
-      font-size: 4rem;
-      margin-bottom: 1rem;
-      animation: float 3s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% {
-        transform: translateY(0px);
-      }
-      50% {
-        transform: translateY(-20px);
-      }
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      letter-spacing: -0.5px;
-    }
-
-    .subtitle {
-      font-size: 1.1rem;
-      opacity: 0.9;
-      margin-bottom: 2rem;
-    }
-
-    .spinner-container {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .spinner {
-      width: 12px;
-      height: 12px;
-      background: white;
-      border-radius: 50%;
-      animation: bounce 1.4s infinite ease-in-out both;
-    }
-
-    .spinner:nth-child(1) {
-      animation-delay: -0.32s;
-    }
-
-    .spinner:nth-child(2) {
-      animation-delay: -0.16s;
-    }
-
-    @keyframes bounce {
-      0%, 80%, 100% {
-        transform: scale(0);
-        opacity: 0.5;
-      }
-      40% {
-        transform: scale(1);
-        opacity: 1;
-      }
-    }
-
-    .fallback-link {
-      margin-top: 2rem;
-      opacity: 0;
-      animation: fadeInLink 0.5s ease-out 2s forwards;
-    }
-
-    @keyframes fadeInLink {
-      to {
-        opacity: 1;
-      }
-    }
-
-    .fallback-link a {
-      color: white;
-      text-decoration: none;
-      padding: 0.75rem 1.5rem;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      border-radius: 8px;
-      display: inline-block;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    .fallback-link a:hover {
-      background: rgba(255, 255, 255, 0.2);
-      border-color: rgba(255, 255, 255, 0.5);
-      transform: translateY(-2px);
-    }
-
-    /* Animated background particles */
-    .particle {
-      position: absolute;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
-      pointer-events: none;
-    }
-
-    .particle:nth-child(1) {
-      width: 80px;
-      height: 80px;
-      top: 10%;
-      left: 15%;
-      animation: drift 8s infinite ease-in-out;
-    }
-
-    .particle:nth-child(2) {
-      width: 60px;
-      height: 60px;
-      top: 60%;
-      right: 20%;
-      animation: drift 10s infinite ease-in-out reverse;
-    }
-
-    .particle:nth-child(3) {
-      width: 100px;
-      height: 100px;
-      bottom: 15%;
-      left: 25%;
-      animation: drift 12s infinite ease-in-out;
-    }
-
-    @keyframes drift {
-      0%, 100% {
-        transform: translate(0, 0) rotate(0deg);
-      }
-      25% {
-        transform: translate(30px, -30px) rotate(90deg);
-      }
-      50% {
-        transform: translate(60px, 0) rotate(180deg);
-      }
-      75% {
-        transform: translate(30px, 30px) rotate(270deg);
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="particle"></div>
-  <div class="particle"></div>
-  <div class="particle"></div>
-  
-  <div class="container">
-    <div class="logo">🌊</div>
-    <h1>Meteora DLMM Recap</h1>
-    <p class="subtitle">Preparing your study notes...</p>
-    
-    <div class="spinner-container">
-      <div class="spinner"></div>
-      <div class="spinner"></div>
-      <div class="spinner"></div>
-    </div>
-    
-    <div class="fallback-link">
-      <a href="/{defaultLocale}/">Click here if not redirected</a>
-    </div>
+  <div class="day-grid">
+    {sorted.map((entry) => {
+      // Remove language suffix from slug (e.g., "day-1-en" -> "day-1")
+      const slug = entry.id.replace(/-(en|id)$/, '');
+      return (
+        <a href={`/${slug}/`} class="day-card">
+          <h2>{entry.data.title}</h2>
+          {entry.data.description && <p>{entry.data.description}</p>}
+          {entry.data.date && (
+            <time datetime={entry.data.date.toISOString()}>
+              {entry.data.date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              })}
+            </time>
+          )}
+        </a>
+      );
+    })}
   </div>
+</DocsLayout>
 
-  <script>
-    // Immediate redirect via JavaScript as fallback
-    setTimeout(() => {
-      window.location.href = '/{defaultLocale}/';
-    }, 100);
-  </script>
-</body>
-</html>
+<style>
+  .day-grid {
+    display: grid;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  /* Tablet: Increase gap */
+  @media (min-width: 480px) {
+    .day-grid {
+      gap: 16px;
+      margin-top: 24px;
+    }
+  }
+
+  .day-card {
+    display: block;
+    padding: 14px 16px;
+    border: 1px solid var(--spectrum-gray-200);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  /* Tablet: Better padding */
+  @media (min-width: 480px) {
+    .day-card {
+      padding: 18px 20px;
+    }
+  }
+
+  /* Desktop: Full padding */
+  @media (min-width: 1024px) {
+    .day-card {
+      padding: 20px 24px;
+    }
+  }
+
+  .day-card:hover {
+    border-color: var(--spectrum-accent-color-900, var(--spectrum-blue-800));
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .day-card h2 {
+    margin: 0;
+    font-size: clamp(17px, 3.5vw, 20px);
+    color: var(--spectrum-gray-900);
+  }
+
+  .day-card p {
+    margin: 6px 0 0;
+    font-size: var(--docs-font-size-xs);
+    color: var(--spectrum-gray-700);
+  }
+
+  /* Tablet: Better spacing */
+  @media (min-width: 480px) {
+    .day-card p {
+      margin-top: 8px;
+      font-size: var(--docs-font-size-sm);
+    }
+  }
+
+  .day-card time {
+    display: block;
+    margin-top: 6px;
+    font-size: var(--docs-font-size-xs);
+    color: var(--spectrum-gray-600);
+  }
+
+  /* Tablet: Better spacing */
+  @media (min-width: 480px) {
+    .day-card time {
+      margin-top: 8px;
+    }
+  }
+
+  /* Dark theme adjustments */
+  :global(.spectrum--darkest) .day-card {
+    border-color: var(--spectrum-gray-700);
+  }
+
+  :global(.spectrum--darkest) .day-card:hover {
+    border-color: var(--spectrum-accent-color-500, #5dadec);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  :global(.spectrum--darkest) .day-card h2 {
+    color: var(--spectrum-gray-50);
+  }
+
+  :global(.spectrum--darkest) .day-card p {
+    color: var(--spectrum-gray-300);
+  }
+
+  :global(.spectrum--darkest) .day-card time {
+    color: var(--spectrum-gray-400);
+  }
+</style>

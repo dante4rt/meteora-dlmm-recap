@@ -1,0 +1,62 @@
+---
+import { getCollection, render } from 'astro:content';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import { getTranslations } from '../../i18n/utils';
+
+export async function getStaticPaths() {
+  const notes = await getCollection('notes');
+  
+  // Filter for Indonesian content only
+  const indonesianNotes = notes.filter((entry) => entry.data.lang === 'id');
+  
+  return indonesianNotes.map((entry) => {
+    // Remove language suffix from slug (e.g., "day-1-id" -> "day-1")
+    const slug = entry.id.replace(/-(en|id)$/, '');
+    return {
+      params: { slug },
+      props: { entry },
+    };
+  });
+}
+
+const locale = 'id';
+const { entry } = Astro.props;
+const t = getTranslations(locale);
+const { Content, headings } = await render(entry);
+---
+
+<DocsLayout title={entry.data.title} headings={headings} locale={locale}>
+  <a href="/id/" class="back-link">&larr; {t.links.backToHome}</a>
+  <h1>{entry.data.title}</h1>
+  <Content />
+</DocsLayout>
+
+<style>
+  .back-link {
+    display: inline-block;
+    margin-bottom: 12px;
+    font-size: var(--docs-font-size-xs);
+    color: var(--spectrum-gray-600);
+    text-decoration: none;
+  }
+
+  /* Better spacing on larger screens */
+  @media (min-width: 480px) {
+    .back-link {
+      margin-bottom: 16px;
+      font-size: var(--docs-font-size-sm);
+    }
+  }
+
+  .back-link:hover {
+    color: var(--spectrum-accent-color-900, var(--spectrum-blue-800));
+  }
+
+  :global(.spectrum--darkest) .back-link {
+    color: var(--spectrum-gray-400);
+  }
+
+  :global(.spectrum--darkest) .back-link:hover {
+    color: var(--spectrum-accent-color-500, #5dadec);
+  }
+</style>

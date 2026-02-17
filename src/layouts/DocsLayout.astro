@@ -13,7 +13,8 @@ const { title, locale, headings = [] } = Astro.props;
 const t = getTranslations(locale);
 const navHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
 const currentPath = Astro.url.pathname;
-const pathWithoutLocale = currentPath.replace(/^\/(en|id)/, '');
+// For new routing: English has no prefix, Indonesian has /id/
+const pathWithoutLocale = locale === 'id' ? currentPath.replace(/^\/id/, '') : currentPath;
 const siteUrl = 'https://meteora-dlmm-recap.pages.dev';
 ---
 
@@ -28,9 +29,9 @@ const siteUrl = 'https://meteora-dlmm-recap.pages.dev';
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     
     <!-- Language alternates for SEO -->
-    <link rel="alternate" hreflang="en" href={`${siteUrl}/en${pathWithoutLocale}`} />
+    <link rel="alternate" hreflang="en" href={`${siteUrl}${pathWithoutLocale}`} />
     <link rel="alternate" hreflang="id" href={`${siteUrl}/id${pathWithoutLocale}`} />
-    <link rel="alternate" hreflang="x-default" href={`${siteUrl}/en${pathWithoutLocale}`} />
+    <link rel="alternate" hreflang="x-default" href={`${siteUrl}${pathWithoutLocale}`} />
   </head>
   <body class="spectrum-Body">
     <div class="header-controls">

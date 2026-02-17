@@ -1,20 +1,14 @@
 ---
 import { getCollection } from 'astro:content';
 import DocsLayout from '../../layouts/DocsLayout.astro';
-import { locales, type Locale, getTranslations } from '../../i18n/utils';
+import { getTranslations } from '../../i18n/utils';
 
-export async function getStaticPaths() {
-  return locales.map((locale) => ({
-    params: { locale },
-  }));
-}
-
-const { locale } = Astro.params as { locale: Locale };
+const locale = 'id';
 const t = getTranslations(locale);
 
 const notes = await getCollection('notes');
-// Filter by locale
-const filtered = notes.filter((entry) => entry.data.lang === locale);
+// Filter by Indonesian language
+const filtered = notes.filter((entry) => entry.data.lang === 'id');
 const sorted = filtered.sort((a, b) => (a.data.day ?? 0) - (b.data.day ?? 0));
 ---
 
@@ -27,12 +21,12 @@ const sorted = filtered.sort((a, b) => (a.data.day ?? 0) - (b.data.day ?? 0));
       // Remove language suffix from slug (e.g., "day-1-id" -> "day-1")
       const slug = entry.id.replace(/-(en|id)$/, '');
       return (
-        <a href={`/${locale}/${slug}/`} class="day-card">
+        <a href={`/id/${slug}/`} class="day-card">
           <h2>{entry.data.title}</h2>
           {entry.data.description && <p>{entry.data.description}</p>}
           {entry.data.date && (
             <time datetime={entry.data.date.toISOString()}>
-              {entry.data.date.toLocaleDateString(locale === 'id' ? 'id-ID' : 'en-US', { 
+              {entry.data.date.toLocaleDateString('id-ID', { 
                 year: 'numeric', 
                 month: 'long', 
                 day: 'numeric' 
@@ -77,49 +71,70 @@ const sorted = filtered.sort((a, b) => (a.data.day ?? 0) - (b.data.day ?? 0));
   }
 
   /* Desktop: Full padding */
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     .day-card {
       padding: 20px 24px;
     }
   }
 
   .day-card:hover {
-    border-color: var(--spectrum-accent-color-700, var(--spectrum-blue-600));
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border-color: var(--spectrum-accent-color-900, var(--spectrum-blue-800));
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   }
 
   .day-card h2 {
-    margin: 0 0 8px;
+    margin: 0;
     font-size: clamp(17px, 3.5vw, 20px);
-    border: none;
-    padding: 0;
+    color: var(--spectrum-gray-900);
   }
 
   .day-card p {
-    margin: 0 0 8px;
-    font-size: var(--docs-font-size-sm);
+    margin: 6px 0 0;
+    font-size: var(--docs-font-size-xs);
     color: var(--spectrum-gray-700);
   }
 
-  .day-card time {
-    font-size: var(--docs-font-size-xs);
-    color: var(--spectrum-gray-500);
+  /* Tablet: Better spacing */
+  @media (min-width: 480px) {
+    .day-card p {
+      margin-top: 8px;
+      font-size: var(--docs-font-size-sm);
+    }
   }
 
+  .day-card time {
+    display: block;
+    margin-top: 6px;
+    font-size: var(--docs-font-size-xs);
+    color: var(--spectrum-gray-600);
+  }
+
+  /* Tablet: Better spacing */
+  @media (min-width: 480px) {
+    .day-card time {
+      margin-top: 8px;
+    }
+  }
+
+  /* Dark theme adjustments */
   :global(.spectrum--darkest) .day-card {
-    border-color: var(--spectrum-gray-600, #444);
+    border-color: var(--spectrum-gray-700);
   }
 
   :global(.spectrum--darkest) .day-card:hover {
     border-color: var(--spectrum-accent-color-500, #5dadec);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  :global(.spectrum--darkest) .day-card h2 {
+    color: var(--spectrum-gray-50);
   }
 
   :global(.spectrum--darkest) .day-card p {
-    color: var(--spectrum-gray-400);
+    color: var(--spectrum-gray-300);
   }
 
   :global(.spectrum--darkest) .day-card time {
-    color: var(--spectrum-gray-500);
+    color: var(--spectrum-gray-400);
   }
 </style>

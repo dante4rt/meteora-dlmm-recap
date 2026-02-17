@@ -12,20 +12,26 @@ const t = getTranslations(locale);
 // Determine the alternate locale
 const alternateLocale: Locale = locale === 'en' ? 'id' : 'en';
 
-// Generate alternate path by replacing locale prefix
+// Generate alternate path for new routing structure
+// English: / (no prefix), Indonesian: /id/
 function getAlternatePath(path: string, fromLocale: Locale, toLocale: Locale): string {
   // Remove leading/trailing slashes for easier processing
   const cleanPath = path.replace(/^\/+|\/+$/g, '');
   const segments = cleanPath.split('/').filter(Boolean);
   
-  // If first segment is the current locale, replace it
-  if (segments[0] === fromLocale) {
-    segments[0] = toLocale;
-    return '/' + segments.join('/') + (path.endsWith('/') ? '/' : '');
+  if (fromLocale === 'en' && toLocale === 'id') {
+    // English → Indonesian: add /id/ prefix
+    return '/id' + (cleanPath ? '/' + cleanPath : '') + (path.endsWith('/') ? '/' : '');
+  } else if (fromLocale === 'id' && toLocale === 'en') {
+    // Indonesian → English: remove /id/ prefix
+    if (segments[0] === 'id') {
+      segments.shift(); // Remove 'id' from the beginning
+      return '/' + (segments.length ? segments.join('/') : '') + (path.endsWith('/') && segments.length ? '/' : '');
+    }
   }
   
-  // If no locale prefix, add the target locale
-  return '/' + toLocale + (cleanPath ? '/' + cleanPath : '');
+  // Fallback: return as-is
+  return path;
 }
 
 const alternatePath = getAlternatePath(currentPath, locale, alternateLocale);
