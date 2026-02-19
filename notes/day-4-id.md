@@ -1,5 +1,5 @@
 ---
-title: "Hari 4 — Rekap Video Garuda Army Bootcamp Hari 1"
+title: "Hari 4 — Rekap Video Garuda Army Bootcamp"
 description: "Rekap video lengkap: evolusi AMM ke CLMM, Meteora V1 vs V2, mekanik bin dan binstep DLMM, strategi likuiditas, panduan UI langsung, dan dasar manajemen risiko"
 date: "2025-02-19"
 day: 4

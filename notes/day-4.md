@@ -1,5 +1,5 @@
 ---
-title: "Day 4 — Garuda Army Bootcamp Day 1 Recap (Video)"
+title: "Day 4 — Garuda Army Bootcamp Recap (Video)"
 description: "Full video recap: AMM vs CLMM evolution, Meteora V1 vs V2, DLMM bins and binsteps, liquidity strategies, live UI walkthrough, and risk management fundamentals"
 date: "2025-02-19"
 day: 4
